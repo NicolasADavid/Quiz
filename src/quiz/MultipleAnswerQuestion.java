@@ -24,8 +24,8 @@ public class MultipleAnswerQuestion extends MultipleChoiceQuestion {
      */
     public MultipleAnswerQuestion(String vettedness) {
         super(vettedness);
-        choices = new ArrayList<String>();
-        correctAnswers = new ArrayList<String>();
+        choices = new ArrayList<>();
+        correctAnswers = new ArrayList<>();
     }
 
     /**
@@ -52,7 +52,7 @@ public class MultipleAnswerQuestion extends MultipleChoiceQuestion {
         String delims = "[ ]+";
         String[] tokens = answer.split(delims);
         
-        ArrayList<String> answers = new ArrayList<String>(tokens.length);
+        ArrayList<String> answers = new ArrayList<>(tokens.length);
         for (String s : tokens) {
             answers.add(s);
         }

@@ -10,15 +10,22 @@
 //
 // Description of Program’s Functionality: 
 //////////////////////////// 80 columns wide/////////////////////////////////
-
 package quiz;
 
-public class QuizDriver {
+public final class QuizDriver {
+    
+    private QuizDriver(){
+    }
 
-    public static void main(String[] args) {
+    /**
+     * Application entry point
+     *
+     * @param args program arguments ( actually they are nor parsed )
+     */
+    public static void main(final String... args) {
 
         //Create new quiz
-        Quiz doom = new Quiz();
+        final Quiz doom = new Quiz();
 
         //Create quiz questions
         doom.createQuestions();
@@ -28,7 +35,7 @@ public class QuizDriver {
 
         //Summarize results
         doom.summarizeResults();
-        
+
     }
 
 }

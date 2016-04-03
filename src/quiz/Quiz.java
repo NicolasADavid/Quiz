@@ -8,173 +8,167 @@
 //
 // Description of Program’s Functionality: 
 //////////////////////////// 80 columns wide/////////////////////////////////
-
 package quiz;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import quiz.utils.Util;
 
+/**
+ * Represents a Quiz
+ */
 public class Quiz {
 
-    private ArrayList<Question> questions;
+    private List<Question> questions;
 
-    private double score = 0.0;
-    private double vettedScore = 0.0;
-    private double trialScore = 0.0;
-    
-    private int totalVetted = 0;
-    private int totalTrial = 0;
-    
-    private int totalCorrectVetted = 0;
-    private int totalIncorrectVetted = 0;
-    
-    private int totalCorrectTrial = 0;
-    private int totalIncorrectTrial = 0;
+    private double score;
+    private double vettedScore;
+    private double trialScore;
 
+    private int totalVetted;
+    private int totalTrial;
+
+    private int totalCorrectVetted;
+    private int totalIncorrectVetted;
+
+    private int totalCorrectTrial;
+    private int totalIncorrectTrial;
+
+    /**
+     * Default Constructor
+     */
     public Quiz() {
-        questions = new ArrayList<Question>();
+        questions = new ArrayList<>();
     }
 
     /**
-     * Create the questions of the quiz. 10 Questions.
+     * Creates the questions of the quiz. 10 Questions.
      */
     public void createQuestions() {
+        addMultipleChoiceQuestion(questions, Question.VETTED,
+                "Multiple choice: What is the first month of the year?",
+                createAnswerChoicesMap(
+                        Util.varargs("January", "February", "March"),
+                        Util.varargs(true, false, false)
+                )
+        );
 
-        //Question 1. Vetted.
-        MultipleChoiceQuestion question1 = new MultipleChoiceQuestion("vetted");
-        question1.setText("Multiple choice: What is the first month of the year?");
-        question1.setChoice("January", true);
-        question1.setChoice("February", false);
-        question1.setChoice("March", false);
-        questions.add(question1);
+        addMultipleChoiceQuestion(questions, Question.TRIAL,
+                "Multiple choice: What is an apple product?",
+                createAnswerChoicesMap(
+                        Util.varargs("ipod", "zune", "lenovo"),
+                        Util.varargs(true, false, false)
+                )
+        );
 
-        //Question 2. Trial.
-        MultipleChoiceQuestion question2 = new MultipleChoiceQuestion("trial");
-        question2.setText("Multiple choice: What is an apple product?");
-        question2.setChoice("ipod", true);
-        question2.setChoice("zune", false);
-        question2.setChoice("lenovo", false);
-        questions.add(question2);
+        addMultipleChoiceQuestion(questions, Question.VETTED,
+                "Multiple choice: What is Barack Obama known for?",
+                createAnswerChoicesMap(
+                        Util.varargs("Really likes the show Narcos",
+                                "He's the president, dude",
+                                "Doesn't actually like mac and cheese"),
+                        Util.varargs(false, true, false)
+                )
+        );
 
-        //Question 3. Vetted.
-        MultipleChoiceQuestion question3 = new MultipleChoiceQuestion("vetted");
-        question3.setText("Multiple choice: What is Barack Obama known for?");
-        question3.setChoice("Really likes the show Narcos", false);
-        question3.setChoice("He's the president, dude", true);
-        question3.setChoice("Doesn’t actually like mac and cheese", false);
-        questions.add(question3);
+        addMultipleAnswerQuestion(questions, Question.VETTED,
+                "Multiple answer (more than one possible): What days are not work days?",
+                createAnswerChoicesMap(
+                        Util.varargs("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"),
+                        Util.varargs(false, false, false, false, false, true, true)
+                )
+        );
 
-        //Question 4. Vetted.
-        MultipleAnswerQuestion question4 = new MultipleAnswerQuestion("vetted");
-        question4.setText("Multiple answer (more than one possible): What days are not work days?");
-        question4.setChoice("Monday", false);
-        question4.setChoice("Tuesday", false);
-        question4.setChoice("Wednesday", false);
-        question4.setChoice("Thursday", false);
-        question4.setChoice("Friday", false);
-        question4.setChoice("Saturday", true);
-        question4.setChoice("Sunday", true);
-        questions.add(question4);
+        addMultipleAnswerQuestion(questions, Question.TRIAL,
+                "Multiple answer (more than one possible): What words begin with the letter \"a\"?",
+                createAnswerChoicesMap(
+                        Util.varargs("apple", "chair", "astronomy", "desk"),
+                        Util.varargs(true, false, true, false)
+                )
+        );
+        addMultipleAnswerQuestion(questions, Question.VETTED,
+                "Multiple answer (more than one possible): What are common household chores?",
+                createAnswerChoicesMap(
+                        Util.varargs("sweeping", "laundry", "skydiving", "basket weaving"),
+                        Util.varargs(true, true, false, false)
+                )
+        );
 
-        //Question 5. Trial.
-        MultipleAnswerQuestion question5 = new MultipleAnswerQuestion("trial");
-        question5.setText("Multiple answer (more than one possible): What words begin with the letter \"a\"?");
-        question5.setChoice("apple", true);
-        question5.setChoice("chair", false);
-        question5.setChoice("astronomy", true);
-        question5.setChoice("desk", false);
-        questions.add(question5);
+        addMultipleChoiceQuestion(questions, Question.VETTED,
+                "Multiple choice: What's the answer, bro?",
+                createAnswerChoicesMap(
+                        Util.varargs("The answer", "Not the answer", "Also not the answer"),
+                        Util.varargs(true, false, false)
+                )
+        );
 
-        //Question 6. Vetted.
-        MultipleAnswerQuestion question6 = new MultipleAnswerQuestion("vetted");
-        question6.setText("Multiple answer (more than one possible): What are common household chores?");
-        question6.setChoice("sweeping", true);
-        question6.setChoice("laundry", true);
-        question6.setChoice("skydiving", false);
-        question6.setChoice("basket weaving", false);
-        questions.add(question6);
+        addFillBlankQuestion(questions, Question.VETTED,
+                "Fill in the blank: The quick red ___ jumped over the lazy brown ___. Hint: fox dog",
+                "fox", "dog"
+        );
 
-        //Question 7. Vetted.
-        MultipleChoiceQuestion question7 = new MultipleChoiceQuestion("vetted");
-        question7.setText("Multiple choice: What's the answer, bro?");
-        question7.setChoice("The answer", true);
-        question7.setChoice("Not the answer", false);
-        question7.setChoice("Also not the answer", false);
-        questions.add(question7);
+        addFillBlankQuestion(questions, Question.VETTED,
+                "Fill in the blank: This is a fill in the _____ question.",
+                "blank"
+        );
 
-        //Question 8. Vetted.
-        FillBlankQuestion question8 = new FillBlankQuestion("vetted");
-        question8.setText("Fill in the blank: The quick red ___ jumped over the lazy brown ___. Hint: fox dog");
-        question8.setAnswer("fox");
-        question8.setAnswer("dog");
-        questions.add(question8);
-
-        //Question 9. Vetted.
-        FillBlankQuestion question9 = new FillBlankQuestion("vetted");
-        question9.setText("Fill in the blank: This is a fill in the _____ question.");
-        question9.setAnswer("blank");
-        questions.add(question9);
-
-        //Question 10. Vetted.
-        FillBlankQuestion question10 = new FillBlankQuestion("vetted");
-        question10.setText("Fill in the blank: This assignment is for a _________ course.");
-        question10.setAnswer("programming");
-        questions.add(question10);
-
+        addFillBlankQuestion(questions, Question.VETTED,
+                "Fill in the blank: This assignment is for a _________ course.",
+                "programming"
+        );
     }
 
     /**
-     * Display a message. Display the questions. Get input. Check if 
+     * Display a message. Display the questions. Get input. Check if
      * correct/gradable and notify user of points earned.
      */
     public void displayAndCheckQuestions() {
 
         //Display a message
-        String message
+        final String message
                 = "For multiple choice questions, enter the number of "
                 + "your choice.\nFor multiple answer questions, enter the number(s) "
                 + "of your choice(s) separated by space.\nFor Fill in the blank"
                 + " questions enter your answer(s) separated by spaces.\n";
 
         System.out.println(message);
-
+        final Scanner scanner = new Scanner(System.in);
         //For every question in questions
         for (int i = 0; i < questions.size(); i++) {
+            final Question currentQuestion = questions.get(i);
 
             //Display the question
             System.out.println(questions.get(i).display());
 
             //Take input
-            String input;
-            System.out.println("Enter your answers in order separated by spaces");
-            Scanner in = new Scanner(System.in);
-            input = in.nextLine();
-            
-            //Print line
-            System.out.println();
-            
+            final String input = scanner.nextLine();
+            System.out.println("Enter your answers in order separated by spaces \n");
+
             //Show user points earned for answer
             System.out.println("You received " + questions.get(i).checkQuestion(input) + " points.");
-            
+
             //Add points to total score
-            score += questions.get(i).checkQuestion(input);
-            
+            score += currentQuestion.checkQuestion(input);
+
             //Show user total points earned
-            System.out.println("Total points: "+score+"\n");
-            
+            System.out.println("Total points: " + score + "\n");
+
             //Was the answer vetted/trial and correct, partially correct, or incorrect?
             int compare;
-            
-            if (questions.get(i).gradeQuestion()) { //Question is vetted
-                
+
+            if (currentQuestion.gradeQuestion()) { //Question is vetted
+
                 //Count vetted questions
                 totalVetted++;
-                
+
                 //Add to vetted score
-                vettedScore += questions.get(i).checkQuestion(input);
-                
+                vettedScore += currentQuestion.checkQuestion(input);
+
                 //Was question correct, partially corrct, or incorrct?
-                compare = Double.compare(questions.get(i).checkQuestion(input), 0.0);
+                compare = Double.compare(currentQuestion.checkQuestion(input), 0.0);
                 if (compare > 0) {
                     //Count correct/partial vetted
                     totalCorrectVetted++;
@@ -184,15 +178,15 @@ public class Quiz {
                 }
 
             } else { //Question is trial
-                
+
                 //Count trial questions
                 totalTrial++;
-                
+
                 //Add to trial score
-                trialScore += questions.get(i).checkQuestion(input);
-                
+                trialScore += currentQuestion.checkQuestion(input);
+
                 //Was question correct, partially correct, or incorrect?
-                compare = Double.compare(questions.get(i).checkQuestion(input), 0.0);
+                compare = Double.compare(currentQuestion.checkQuestion(input), 0.0);
                 if (compare > 0) {
                     //Count correct/partial trial
                     totalCorrectTrial++;
@@ -206,36 +200,158 @@ public class Quiz {
         }
 
     }
-    
+
     /**
-     * Report total questions, vetted questions, and trial questions.
-     * Report score earned for each.
-     * Report questions answered correctly or partially correctly for each.
-     * Report questions answered incorrectly for each.
+     * Report total questions, vetted questions, and trial questions. Report
+     * score earned for each. Report questions answered correctly or partially
+     * correctly for each. Report questions answered incorrectly for each.
      */
-    
     public void summarizeResults() {
-        int totalCorrect = totalCorrectVetted+totalCorrectTrial;
-        int totalIncorrect = totalIncorrectVetted+totalIncorrectTrial;
-        
-        System.out.println("There were a total of "+questions.size()+" questions.");
-        System.out.println("You received a total of "+score+" points.");
-        System.out.println("Answered "+totalCorrect+" for full or partial credit");
-        System.out.println("Answered " +totalIncorrect+" for no credit");
+        final int totalCorrect = totalCorrectVetted + totalCorrectTrial;
+        final int totalIncorrect = totalIncorrectVetted + totalIncorrectTrial;
+
+        System.out.println("There were a total of " + questions.size() + " questions.");
+        System.out.println("You received a total of " + score + " points.");
+        System.out.println("Answered " + totalCorrect + " for full or partial credit");
+        System.out.println("Answered " + totalIncorrect + " for no credit");
         System.out.println();
-        
-        System.out.println("There were "+totalVetted+" vetted questions.");
-        System.out.println("You received a total of "+vettedScore+" points on them.");
-        System.out.println("Answered "+totalCorrectVetted+" for full or partial credit");
-        System.out.println("Answered " +totalIncorrectVetted+" for no credit");
+
+        System.out.println("There were " + totalVetted + " vetted questions.");
+        System.out.println("You received a total of " + vettedScore + " points on them.");
+        System.out.println("Answered " + totalCorrectVetted + " for full or partial credit");
+        System.out.println("Answered " + totalIncorrectVetted + " for no credit");
         System.out.println();
-        
-        System.out.println("There were "+totalTrial+" trial questions.");
-        System.out.println("You received a total of "+trialScore+" points on them.");
-        System.out.println("Answered "+totalCorrectTrial+" for full or partial credit");
-        System.out.println("Answered " +totalIncorrectTrial+" for no credit");
-        
+
+        System.out.println("There were " + totalTrial + " trial questions.");
+        System.out.println("You received a total of " + trialScore + " points on them.");
+        System.out.println("Answered " + totalCorrectTrial + " for full or partial credit");
+        System.out.println("Answered " + totalIncorrectTrial + " for no credit");
+
         System.out.println("Have a wonderful day.");
+    }
+
+    private void addMultipleChoiceQuestion(final List<Question> questions,
+            final String vettedness, final String questionText,
+            final Map<String, Boolean> answerChoicesMap) {
+        final MultipleChoiceQuestion choiceQuestion = new MultipleChoiceQuestion(vettedness);
+        choiceQuestion.setText(questionText);
+        answerChoicesMap.entrySet().stream().forEach((choiceEntry) -> {
+            choiceQuestion.setChoice(choiceEntry.getKey(), choiceEntry.getValue());
+        });
+        questions.add(choiceQuestion);
+    }
+
+    private void addMultipleAnswerQuestion(final List<Question> questions,
+            final String vettedness, final String questionText,
+            final Map<String, Boolean> answerChoicesMap) {
+        final MultipleAnswerQuestion choiceQuestion = new MultipleAnswerQuestion(vettedness);
+        choiceQuestion.setText(questionText);
+        answerChoicesMap.entrySet().stream().forEach((choiceEntry) -> {
+            choiceQuestion.setChoice(choiceEntry.getKey(), choiceEntry.getValue());
+        });
+        questions.add(choiceQuestion);
+    }
+
+    private void addFillBlankQuestion(final List<Question> questions,
+            final String vettedness, final String questionText, final String... blanks) {
+        final FillBlankQuestion fillBlankQuestion = new FillBlankQuestion(vettedness);
+        fillBlankQuestion.setText(questionText);
+        for (final String blank : blanks) {
+            fillBlankQuestion.setAnswer(blank);
+        }
+        questions.add(fillBlankQuestion);
+    }
+
+    private Map<String, Boolean> createAnswerChoicesMap(final String[] answerTexts, final Boolean[] answerValidities) {
+        final int numsOfAnswers = answerTexts.length;
+        if (numsOfAnswers != answerValidities.length) {
+            throw new RuntimeException("Answer texts should match answr values one by one");
+        }
+        final HashMap<String, Boolean> hashMap = new HashMap<>();
+        for (int answIdx = 0; answIdx < answerTexts.length; answIdx++) {
+            hashMap.put(answerTexts[answIdx], answerValidities[answIdx]);
+        }
+        return hashMap;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(final List<Question> questions) {
+        this.questions = questions;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(final double score) {
+        this.score = score;
+    }
+
+    public double getVettedScore() {
+        return vettedScore;
+    }
+
+    public void setVettedScore(double vettedScore) {
+        this.vettedScore = vettedScore;
+    }
+
+    public double getTrialScore() {
+        return trialScore;
+    }
+
+    public void setTrialScore(final double trialScore) {
+        this.trialScore = trialScore;
+    }
+
+    public int getTotalVetted() {
+        return totalVetted;
+    }
+
+    public void setTotalVetted(final int totalVetted) {
+        this.totalVetted = totalVetted;
+    }
+
+    public int getTotalTrial() {
+        return totalTrial;
+    }
+
+    public void setTotalTrial(final int totalTrial) {
+        this.totalTrial = totalTrial;
+    }
+
+    public int getTotalCorrectVetted() {
+        return totalCorrectVetted;
+    }
+
+    public void setTotalCorrectVetted(final int totalCorrectVetted) {
+        this.totalCorrectVetted = totalCorrectVetted;
+    }
+
+    public int getTotalIncorrectVetted() {
+        return totalIncorrectVetted;
+    }
+
+    public void setTotalIncorrectVetted(final int totalIncorrectVetted) {
+        this.totalIncorrectVetted = totalIncorrectVetted;
+    }
+
+    public int getTotalCorrectTrial() {
+        return totalCorrectTrial;
+    }
+
+    public void setTotalCorrectTrial(final int totalCorrectTrial) {
+        this.totalCorrectTrial = totalCorrectTrial;
+    }
+
+    public int getTotalIncorrectTrial() {
+        return totalIncorrectTrial;
+    }
+
+    public void setTotalIncorrectTrial(final int totalIncorrectTrial) {
+        this.totalIncorrectTrial = totalIncorrectTrial;
     }
 
 }
