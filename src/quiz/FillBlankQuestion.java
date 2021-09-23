@@ -38,7 +38,7 @@ public class FillBlankQuestion extends Question {
         userAnswer = daAnswer;
         return checkQuestion();
     }
-    private static final String delims = "[ ]+";
+    private static final String delims = "[\\-]+";
 
     @Override
     public double checkQuestion() {
