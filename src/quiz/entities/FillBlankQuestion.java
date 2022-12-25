@@ -8,12 +8,15 @@
 //
 // Description of Program’s Functionality: 
 //////////////////////////// 80 columns wide/////////////////////////////////
-package quiz;
+package quiz.entities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * A Fill in the blank or fill in the blanks question
+ */
 public class FillBlankQuestion extends Question {
 
     private final List<String> correctAnswers;
@@ -64,7 +67,7 @@ public class FillBlankQuestion extends Question {
      * {@inheritDoc }
      */
     @Override
-    protected double getMaxPoints() {
+    public double getMaxPoints() {
         return 1.0;
     }
 }

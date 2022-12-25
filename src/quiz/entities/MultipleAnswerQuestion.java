@@ -8,12 +8,15 @@
 //
 // Description of Program’s Functionality: 
 //////////////////////////// 80 columns wide/////////////////////////////////
-package quiz;
+package quiz.entities;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+/**
+ * A multiple answer question
+ */
 public class MultipleAnswerQuestion extends MultipleChoiceQuestion {
 
     private final ArrayList<String> choices;
@@ -34,6 +37,7 @@ public class MultipleAnswerQuestion extends MultipleChoiceQuestion {
      * @param choice the choice to add
      * @param correct true if this is the correct choice, false otherwise
      */
+    @Override
     public void setChoice(String choice, boolean correct) {
         choices.add(choice);
         if (correct) {

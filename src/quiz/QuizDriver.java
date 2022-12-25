@@ -1,6 +1,9 @@
 
 package quiz;
 
+import quiz.entities.Quiz;
+import quiz.repository.FileQuestionRepository;
+
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -45,9 +48,7 @@ public final class QuizDriver {
             String extension = fileName.substring(fileName.lastIndexOf('.'));
             return ".txt".equalsIgnoreCase(extension);
         }).forEach(txtFile->
-//                myQuiz.createQuestionsFromFile("quiz/resources/SampleQuiz.txt", true)
-                myQuiz.createQuestionsFromFile("quiz/resources/"+txtFile.getName(), true)
-
+            FileQuestionRepository.createQuestionsFromFile("quiz/resources/"+txtFile.getName(), true,myQuiz::parseQuestion)
         );
     }
 

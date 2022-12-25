@@ -8,18 +8,21 @@
 //
 // Description of Program’s Functionality: 
 //////////////////////////// 80 columns wide/////////////////////////////////
-package quiz;
+package quiz.entities;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 /**
- * A question with multiple choices.
+ * A question with multiple choices. Includes TrueFalse questions
  */
 public class MultipleChoiceQuestion extends Question {
 
     private static final Pattern BLANKS = Pattern.compile("\\s+");
-    private final ArrayList<String> choices;
+    /**
+     * answer options
+     */
+    protected final ArrayList<String> choices;
 
     /**
      * Constructs a multiple choice question with no choices.
@@ -90,7 +93,7 @@ public class MultipleChoiceQuestion extends Question {
      * {@inheritDoc }
      */
     @Override
-    double getMaxPoints() {
+    public double getMaxPoints() {
         return 1.0;
     }
 

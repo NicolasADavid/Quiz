@@ -1,4 +1,7 @@
-package quiz;
+package quiz.entities;
+
+import quiz.entities.Difficulty;
+import quiz.entities.FillBlankQuestion;
 
 /**
  * @author NicolasADavid
@@ -9,9 +12,21 @@ abstract public class Question {
     public static final String VETTED = "vetted";
     public static final String TRIAL = "trial";
 
+    /**
+     * Question enunciate
+     */
     protected String text;
+    /**
+     * default correct answer
+     */
     protected String answer;
+    /**
+     * Justification of why the answer is correct
+     */
     protected String explanation;
+    /**
+     * user provided answer
+     */
     protected String userAnswer;
     protected String vettedOrTrial;
     protected String category;
@@ -55,11 +70,6 @@ abstract public class Question {
     public void setExplanation(String explanation) {
         this.explanation = explanation;
     }
-//    /**
-//     * Checks the answer(s)
-//     * @return true for correct, false otherwise
-//     */
-//    public abstract double checkAnswer(String answer);
 
     /**
      * Show question Text
@@ -104,7 +114,7 @@ abstract public class Question {
     /**
      * Maximum number of point that can be awarded by this question.
      */
-    abstract double getMaxPoints();
+    public abstract double getMaxPoints();
 
     public String getCategory() {
         return category;

@@ -1,4 +1,4 @@
-package quiz;
+package quiz.entities;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -88,42 +88,6 @@ public class Quiz {
         questions = new ArrayList<>(50);
     }
 
-    /**
-     * Reads a file and call the method that processes it to fill the quiz.
-     */
-    public void createQuestionsFromFile(String path, boolean isInJar) {
-        try (BufferedReader reader = createReader(path, isInJar)) {
-            if (reader == null) {
-                return;
-            }
-            parseQuestions(reader);
-        } catch (IOException ex) {
-            Logger.getLogger(Quiz.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private static BufferedReader createReader(String path, boolean isInJar) {
-        System.out.println("Loading file: "+path);
-        BufferedReader reader;
-        if (isInJar) {
-            reader = new BufferedReader(new InputStreamReader(Thread.currentThread().getContextClassLoader().getResourceAsStream(path)));
-        } else {
-            try {
-                reader = new BufferedReader(new FileReader(new File(path)));
-            } catch (FileNotFoundException e) {
-                Logger.getLogger(Quiz.class.getName()).log(Level.SEVERE, "The specified file does not exist:" + path, e);
-                return null;
-            }
-        }
-        return reader;
-    }
-
-    private void parseQuestions(BufferedReader reader) throws IOException {
-        String thisLine;
-        while ((thisLine = reader.readLine()) != null) {
-            parseQuestion(thisLine);
-        }
-    }
 
     /**
      * Display a message. Display the questions. Get input. Check if
@@ -345,7 +309,7 @@ public class Quiz {
                 System.out.println(questions.get(i).display());
                 System.out.println(MessageFormat.format(getBundle("quiz/resources/quiz").getString("RECEIVED_POINTS"), points));
                 System.out.println(MessageFormat.format(getBundle("quiz/resources/quiz").getString("CORRECT_ANSWER"), questions.get(i).getAnswer()));
-                System.out.println(MessageFormat.format(getBundle("quiz/resources/quiz").getString("EXPLANATION"), questions.get(i).explanation));
+                System.out.println(MessageFormat.format(getBundle("quiz/resources/quiz").getString("EXPLANATION"), questions.get(i).getExplanation()));
             }
         }
     }
@@ -353,7 +317,7 @@ public class Quiz {
     /**
      * @param questionString the question fields split by @@
      */
-    private void parseQuestion(final String questionString) {
+    public void parseQuestion(final String questionString) {
         final String[] questarray = SEPARATE_BY_DIVIDER_PATTERN.split(questionString);
         String tipoPregunta = questarray[0];
         String vettedness = "v".equals(questarray[1]) ? Question.VETTED : Question.TRIAL;
@@ -381,6 +345,10 @@ public class Quiz {
                 addMultipleAnswerQuestion(questions, vettedness, explanation, questionText,
                         category, difficulty, choices);
                 break;
+            }
+            case "OE":{
+                //one example
+
             }
             default:
                 System.err.println(MessageFormat.format(getBundle("quiz/resources/quiz").getString("QUESTION_TYPE_ERR"), new Object[]{}));
