@@ -3,6 +3,7 @@ package quiz;
 
 import quiz.entities.Quiz;
 import quiz.repository.FileQuestionRepository;
+import quiz.service.QuestionParser;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -41,16 +42,25 @@ public final class QuizDriver {
         myQuiz.showFailed();
     }
 
-    private static void loadQuestions(Quiz myQuiz) {
-        String[] dir = detectFilenamesInResourcesFolder();
-        Arrays.stream(dir).sequential().map(File::new).filter(file -> {
-            String fileName=file.getName();
-            String extension = fileName.substring(fileName.lastIndexOf('.'));
-            return ".txt".equalsIgnoreCase(extension);
-        }).forEach(txtFile->
-            FileQuestionRepository.createQuestionsFromFile("quiz/resources/"+txtFile.getName(), true,myQuiz::parseQuestion)
-        );
-    }
+  private static void loadQuestions(Quiz myQuiz) {
+    String[] dir = detectFilenamesInResourcesFolder();
+    Arrays.stream(dir)
+        .sequential()
+        .map(File::new)
+        .filter(
+            file -> {
+              String fileName = file.getName();
+              String extension = fileName.substring(fileName.lastIndexOf('.'));
+              return ".txt".equalsIgnoreCase(extension);
+            })
+        .forEach(
+            txtFile ->
+                FileQuestionRepository.createQuestionsFromFile(
+                    "quiz/resources/" + txtFile.getName(),
+                    true,
+                    questionString ->
+                        QuestionParser.parseQuestion(questionString, myQuiz.getQuestions())));
+  }
 
     private static String[] detectFilenamesInResourcesFolder() {
         URL pathUrl = QuizDriver.class.getClassLoader().getResource("quiz/resources/");
