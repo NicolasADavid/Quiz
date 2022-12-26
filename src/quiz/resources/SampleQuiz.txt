@@ -8,3 +8,4 @@ MC@@v@@@@sample@@0@@Multiple choice: What's the answer,bro?@@0@@The answer@@Not 
 FB@@v@@@@sample@@0@@Fill in the blank: The quick red ___ jumped over the lazy brown ___. Hint: fox dog@@fox@@dog
 FB@@v@@@@sample@@0@@Fill in the blank: This is a fill in the _____ question.@@blank
 FB@@v@@@@sample@@0@@Fill in the blank: This assignment is for a _________ course.@@programming
+OE@@v@@@@sample@@0@@Give an example of natural number:@@1@@2@@3@@4@@5@@6@@7@@8@@9@@0

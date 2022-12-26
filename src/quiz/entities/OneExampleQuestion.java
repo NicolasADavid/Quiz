@@ -32,4 +32,13 @@ public class OneExampleQuestion extends MultipleChoiceQuestion {
     // TODO tal vez aquí llamar a checkQuestionProvidingAnswer para llenar
     return 0.0;
   }
+
+  @Override
+  public String display() {
+
+    StringBuilder display = new StringBuilder(text);
+    display.append("\n");
+
+    return display.toString();
+  }
 }

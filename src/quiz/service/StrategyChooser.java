@@ -3,6 +3,7 @@ package quiz.service;
 import quiz.service.strategy.FillBlankParseStrategy;
 import quiz.service.strategy.MultipleAnswerParseStrategy;
 import quiz.service.strategy.MultipleChoiceParseStrategy;
+import quiz.service.strategy.OneExampleParseStrategy;
 import quiz.service.strategy.QuestionStrategy;
 
 import java.util.Collections;
@@ -33,6 +34,7 @@ public class StrategyChooser {
               put("MC", new MultipleChoiceParseStrategy());
               put("FB", new FillBlankParseStrategy());
               put("MA", new MultipleAnswerParseStrategy());
+              put("OE", new OneExampleParseStrategy());
             }
           });
 
