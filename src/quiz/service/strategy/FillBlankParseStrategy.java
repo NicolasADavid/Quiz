@@ -6,7 +6,7 @@ import quiz.entities.Question;
 import java.util.Arrays;
 import java.util.List;
 
-public class FillBlankQuestionStrategy  implements QuestionStrategy {
+public class FillBlankParseStrategy implements QuestionStrategy {
     @Override
     public void parse(String[] questarray, List<Question> questions) {
         String vettedness = "v".equals(questarray[1]) ? Question.VETTED : Question.TRIAL;

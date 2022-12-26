@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 import static java.util.ResourceBundle.getBundle;
 
-public class MultipleAnswerQuestionStrategy  implements QuestionStrategy {
+public class MultipleAnswerParseStrategy implements QuestionStrategy {
     @Override
     public void parse(String[] questarray, List<Question> questions) {
         String vettedness = "v".equals(questarray[1]) ? Question.VETTED : Question.TRIAL;

@@ -1,8 +1,8 @@
 package quiz.service;
 
-import quiz.service.strategy.FillBlankQuestionStrategy;
-import quiz.service.strategy.MultipleAnswerQuestionStrategy;
-import quiz.service.strategy.MultipleChoiceQuestionStrategy;
+import quiz.service.strategy.FillBlankParseStrategy;
+import quiz.service.strategy.MultipleAnswerParseStrategy;
+import quiz.service.strategy.MultipleChoiceParseStrategy;
 import quiz.service.strategy.QuestionStrategy;
 
 import java.util.Collections;
@@ -30,9 +30,9 @@ public class StrategyChooser {
       Collections.unmodifiableMap(
           new HashMap<String, QuestionStrategy>() {
             {
-              put("MC", new MultipleChoiceQuestionStrategy());
-              put("FB", new FillBlankQuestionStrategy());
-              put("MA", new MultipleAnswerQuestionStrategy());
+              put("MC", new MultipleChoiceParseStrategy());
+              put("FB", new FillBlankParseStrategy());
+              put("MA", new MultipleAnswerParseStrategy());
             }
           });
 
