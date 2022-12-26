@@ -35,10 +35,6 @@ public class OneExampleQuestion extends MultipleChoiceQuestion {
 
   @Override
   public String display() {
-
-    StringBuilder display = new StringBuilder(text);
-    display.append("\n");
-
-    return display.toString();
+    return text + "\n";
   }
 }

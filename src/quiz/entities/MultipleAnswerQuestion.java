@@ -113,7 +113,8 @@ public class MultipleAnswerQuestion extends MultipleChoiceQuestion {
 
         for (int i = 0; i < choices.size(); i++) {
             final int choiceNumber = i + 1;
-            display.append(choiceNumber).append(": ").append(choices.get(i)).append("\n");
+            String choice = choices.get(i);
+            display.append(choiceNumber).append(": ").append(choice).append("\n");
         }
 
         return display.toString();

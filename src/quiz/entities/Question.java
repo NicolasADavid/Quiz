@@ -88,22 +88,8 @@ abstract public class Question {
 
     public double checkQuestion() {
         if (userAnswer != null) {
-            if (this instanceof FillBlankQuestion) {
-                if (userAnswer.equalsIgnoreCase(answer)) {
-                    return 1.0;
-                }
-//                else {
-                //TODO tal vez aquí llamar a checkQuestionProvidingAnswer para llenar
-//                    return 0.0;
-//                }
-            } else {
-                if (userAnswer.equals(answer)) {
-                    return 1.0;
-                }
-//                else {
-                //TODO tal vez aquí llamar a checkQuestionProvidingAnswer para llenar
-//                    return 0.0;
-//                }
+            if (userAnswer.equalsIgnoreCase(answer)) {
+                return 1.0;
             }
         }
         //TODO tal vez aquí llamar a checkQuestionProvidingAnswer para llenar
