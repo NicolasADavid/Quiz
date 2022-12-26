@@ -1,6 +1,7 @@
 package quiz.entities;
 
 import quiz.service.QuestionParser;
+import quiz.service.strategy.QuestionStrategy;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -269,7 +270,7 @@ public class Quiz {
         System.out.println("Difficulty levels:");
         System.out.println("0 - normal\n 1 - hard\n 2 - easy");
         List<Difficulty> selectedDifficulties = Arrays.stream(BLANKS.split(scanner.nextLine())).distinct()
-                .map(String::trim).map(QuestionParser::str2difficulty).collect(Collectors.toList());
+                .map(String::trim).map(QuestionStrategy::str2difficulty).collect(Collectors.toList());
         System.out.println("You selected the categories:" + Arrays.toString(selectedDifficulties.toArray()));
         //filter questions by category
         questions = questions.stream().filter(question -> selectedDifficulties.contains(question.getDifficulty())).collect(Collectors.toList());
