@@ -1,6 +1,7 @@
 package quiz.service;
 
 import quiz.service.strategy.FillBlankParseStrategy;
+import quiz.service.strategy.MatchingParseStrategy;
 import quiz.service.strategy.MultipleAnswerParseStrategy;
 import quiz.service.strategy.MultipleChoiceParseStrategy;
 import quiz.service.strategy.OneExampleParseStrategy;
@@ -35,6 +36,7 @@ public class StrategyChooser {
               put("FB", new FillBlankParseStrategy());
               put("MA", new MultipleAnswerParseStrategy());
               put("OE", new OneExampleParseStrategy());
+              put("MP", new MatchingParseStrategy());
             }
           });
 

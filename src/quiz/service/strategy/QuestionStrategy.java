@@ -1,7 +1,6 @@
 package quiz.service.strategy;
 
 import quiz.entities.Difficulty;
-import quiz.entities.MultipleChoiceQuestion;
 import quiz.entities.Question;
 
 import java.util.List;

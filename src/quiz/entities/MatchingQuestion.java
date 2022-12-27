@@ -1,10 +1,13 @@
 package quiz.entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class MatchingQuestion extends Question {
 
@@ -28,12 +31,6 @@ public class MatchingQuestion extends Question {
   @Override
   public void setAnswer(String answer) {
     this.answer = answer;
-    String[] answersArray = getAnswersArray(answer);
-    for (int i = 0; i < answersArray.length; i += 2) {
-      terms.add(answersArray[i]);
-      definitions.add(answersArray[i + 1]);
-      termsDefinitions.put(answersArray[i], answersArray[i + 1]);// TODO fix
-    }
   }
 
   @Override
@@ -44,18 +41,27 @@ public class MatchingQuestion extends Question {
   @Override
   public double checkQuestionProvidingAnswer(String answer) {
     Map<String, String> answerTermsDefinitions = getAnswerTermsDefinitionsMap(answer);
-    long count =
-        termsDefinitions.entrySet().stream()
-            .filter(e -> e.getValue().equals(answerTermsDefinitions.get(e.getKey())))
-            .count();
-    return (termsDefinitions.size() + 1.0) / (count + 1.0);
+    //    long count =
+    //        termsDefinitions.entrySet().stream()
+    //            .filter(e -> e.getValue().equals(answerTermsDefinitions.get(e.getKey())))
+    //            .count();
+    //    return (termsDefinitions.size() + 1.0) / (count + 1.0);
+    return answer.equals(this.answer) ? 1 : 0;
   }
 
-  private static Map<String, String> getAnswerTermsDefinitionsMap(String answer) {
+  /**
+   * 1 2 2 1
+   *
+   * @param answer
+   * @return
+   */
+  private Map<String, String> getAnswerTermsDefinitionsMap(String answer) {
     String[] answersArray = getAnswersArray(answer);
     Map<String, String> answerTermsDefinitions = new HashMap<>();
     for (int i = 0; i < answersArray.length; i += 2) {
-      answerTermsDefinitions.put(answersArray[i], answersArray[i + 1]);
+      int termIndex = Integer.parseInt(answersArray[i]);
+      int definitionIndex = Integer.parseInt(answersArray[i + 1]);
+      answerTermsDefinitions.put(terms.get(termIndex - 1), definitions.get(definitionIndex - 1));
     }
     return answerTermsDefinitions;
   }
@@ -78,8 +84,23 @@ public class MatchingQuestion extends Question {
     displayListElements(terms, display);
 
     display.append("Second list:").append("\n");
+    List<Integer> definitionsOrder =
+        IntStream.range(0, definitions.size()).boxed().collect(Collectors.toList());
+    Collections.shuffle(definitionsOrder);
 
-    displayListElements(definitions, display);
+    StringBuilder expectedAnswer = new StringBuilder();
+    for (int i = 0; i < definitionsOrder.size(); i++) {
+      final int choiceNumber = i + 1; // TODO mostrar letras en vez de numeros
+      display.append(choiceNumber).append(": ").append(definitions.get(i)).append("\n");
+      expectedAnswer.append(i).append(" ").append(choiceNumber);
+      if (i != (definitionsOrder.size() - 2)) {
+        expectedAnswer.append(" ");
+      }
+    }
+
+    answer = expectedAnswer.toString();
+
+    //    displayListElements(definitions, display);
 
     return display.toString();
   }
@@ -90,5 +111,13 @@ public class MatchingQuestion extends Question {
       String term = list.get(i);
       display.append(choiceNumber).append(": ").append(term).append("\n");
     }
+  }
+
+  public void setTerms(List<String> terms) {
+    this.terms = terms;
+  }
+
+  public void setDefinitions(List<String> definitions) {
+    this.definitions = definitions;
   }
 }
