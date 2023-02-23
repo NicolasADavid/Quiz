@@ -8,85 +8,93 @@
 //
 // Description of Program’s Functionality: 
 //////////////////////////// 80 columns wide/////////////////////////////////
-
-package quiz;
+package quiz.entities;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
- * A question with multiple choices.
+ * A question with multiple choices. Includes TrueFalse questions
  */
 public class MultipleChoiceQuestion extends Question {
 
-    private ArrayList<String> choices;
-    private int correctAnswer;
+    private static final Pattern BLANKS = Pattern.compile("\\s+");
+    /**
+     * answer options
+     */
+    protected final ArrayList<String> choices;
 
     /**
      * Constructs a multiple choice question with no choices.
      */
     public MultipleChoiceQuestion(String vettedness) {
         super(vettedness);
-        choices = new ArrayList<String>();
+        choices = new ArrayList<>(2);
     }
 
     /**
      * Adds an answer choice to this question.
      *
-     * @param choice the choice to add
+     * @param choice  the choice to add
      * @param correct true if this is the correct choice, false otherwise
      */
     public void setChoice(String choice, boolean correct) {
         choices.add(choice);
         if (correct) {
             // Convert choices.size() to string
-            String choiceString = "" + choices.size();
+            String choiceString = String.valueOf(choices.size());
             setAnswer(choiceString);
         }
     }
 
     /**
      * Sets the correct answer. A number in a string.
-     * @param answer a number in a string that corresponds to the answers place in the choices arrayList
+     *
+     * @param answer a number in a string that corresponds to the answers place
+     *               in the choices arrayList
      */
+    @Override
     public void setAnswer(String answer) {
         this.answer = answer;
+//        int correctAnswer = choices.indexOf(answer);
     }
-    
-//    /**
-//     * Takes an answer from input
-//     */
-//    public boolean takeAnswer() {
-//        String input;
-//        System.out.println("Enter the number of the answer");
-//        Scanner in = new Scanner(System.in); //Create new scanner for user input
-//        input = in.nextLine();
-//        return checkAnswer(input);
-//    }
 
-    public double checkQuestion(String answer) {
-        answer = answer.replaceAll("\\s+","");
-        if(this.answer.equals(answer)){
-            return 1.0;
-        } else {
-            return 0.0;
-        }
+    @Override
+    public String getAnswer() {
+        return answer;
+    }
+
+    @Override
+    public double checkQuestionProvidingAnswer(final String answer) {
+        userAnswer = BLANKS.matcher(answer).replaceAll("");
+        return checkQuestion();
     }
 
     /**
      * Returns a string with the question text and choices
+     *
      * @return string with question text and choice
      */
+    @Override
     public String display() {
-        
-        String display = text+"\n";
-        
+
+        StringBuilder display = new StringBuilder(text);
+        display.append("\n");
+
         for (int i = 0; i < choices.size(); i++) {
             int choiceNumber = i + 1;
-            display = display.concat(choiceNumber + ": " + choices.get(i)+"\n");
+            display.append(choiceNumber).append(": ").append(choices.get(i)).append("\n");
         }
-        
-        return display;
+
+        return display.toString();
     }
-    
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public double getMaxPoints() {
+        return 1.0;
+    }
+
 }

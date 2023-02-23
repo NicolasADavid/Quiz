@@ -1,0 +1,12 @@
+MC@@v@@@@sample@@0@@Multiple choice: What is the first month of the year?@@0@@January@@February@@March
+MC@@t@@@@sample@@0@@Multiple choice: What is an apple product?@@0@@ipod@@zune@@lenovo
+MC@@v@@@@sample@@0@@Multiple choice: What is Barack Obama known for?@@1@@Really likes the show Narcos@@He's the president, dude@@Doesn't actually like mac and cheese
+MA@@v@@@@sample@@0@@Multiple answer (more than one possible): What days are not work days?@@Monday@@Tuesday@@Wednesday@@Thursday@@Friday@@Saturday@@Sunday@@false@@false@@false@@false@@false@@true@@true
+MA@@t@@@@sample@@0@@Multiple answer (more than one possible): What words begin with the letter \"a\"?@@apple@@chair@@astronomy@@desk@@true@@false@@true@@false
+MA@@v@@@@sample@@0@@Multiple answer (more than one possible): What are common household chores?@@sweeping@@laundry@@skydiving@@basket weaving@@true@@true@@false@@false
+MC@@v@@@@sample@@0@@Multiple choice: What's the answer,bro?@@0@@The answer@@Not the answer@@Also not the answer
+FB@@v@@@@sample@@0@@Fill in the blank: The quick red ___ jumped over the lazy brown ___. Hint: fox dog@@fox@@dog
+FB@@v@@@@sample@@0@@Fill in the blank: This is a fill in the _____ question.@@blank
+FB@@v@@@@sample@@0@@Fill in the blank: This assignment is for a _________ course.@@programming
+OE@@v@@@@sample@@0@@Give an example of natural number:@@1@@2@@3@@4@@5@@6@@7@@8@@9@@0
+MP@@v@@@@sample@@0@@Match the following terms with their definitions:@@Monarchy@@Democracy@@Dictatorship@@***A form of government in which the ruler is an absolute dictator@@A form of government in which the people have the power to make decisions@@A form of government in which a king or queen holds supreme authority

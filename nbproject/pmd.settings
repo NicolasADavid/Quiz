@@ -1,0 +1,8 @@
+LawOfDemeter
+UseUtilityClass
+ShortClassName
+LongVariable
+CommentSize
+SystemPrintln
+DataflowAnomalyAnalysis
+AvoidThrowingRawExceptionTypes

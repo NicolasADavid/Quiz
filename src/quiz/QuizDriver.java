@@ -1,34 +1,78 @@
-///////////////////////////////////////////////////////////////////////////////                  
-// Title:            Quiz
-// Files:          JavaApplication9Quiz.java;Quiz.java;Question.java;
-//                  MultipleChoiceQuestion.java;MultipleAnswerQuestion.java;
-//                  FillBlankQuestion.java
-// Semester:         COP3337 Fall 2015
-//
-// Author:           3587814
-// Lecturer's Name:  Prof. Maria Charters
-//
-// Description of Program’s Functionality: 
-//////////////////////////// 80 columns wide/////////////////////////////////
 
 package quiz;
 
-public class QuizDriver {
+import quiz.entities.Quiz;
+import quiz.repository.FileQuestionRepository;
+import quiz.service.QuestionParser;
 
-    public static void main(String[] args) {
+import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Arrays;
 
-        //Create new quiz
-        Quiz doom = new Quiz();
+/**
+ * Administers a quiz consisting of multiple choice, multiple answer, and
+ * fill-in-the-blank questions.
+ *
+ * @author NicolasADavid
+ * @author Javatlacati
+ */
+public final class QuizDriver {
 
-        //Create quiz questions
-        doom.createQuestions();
+    /**
+     * Default constructor.
+     */
+    private QuizDriver() {
+    }
 
+    /**
+     * Application entry point
+     *
+     * @param args program arguments ( actually they are not parsed )
+     */
+    public static void main(final String... args) {
+        final Quiz myQuiz = new Quiz();
+        loadQuestions(myQuiz);
+        myQuiz.askForCategories();
+        myQuiz.askForDifficulty();
         //Display questions to user, receive and check response
-        doom.displayAndCheckQuestions();
+        myQuiz.askForSubsetSize();
+        myQuiz.displayAndCheckQuestions();
+        myQuiz.summarizeResults();
+        myQuiz.showFailed();
+    }
 
-        //Summarize results
-        doom.summarizeResults();
-        
+  private static void loadQuestions(Quiz myQuiz) {
+    String[] dir = detectFilenamesInResourcesFolder();
+    Arrays.stream(dir)
+        .sequential()
+        .map(File::new)
+        .filter(
+            file -> {
+              String fileName = file.getName();
+              String extension = fileName.substring(fileName.lastIndexOf('.'));
+              return ".txt".equalsIgnoreCase(extension);
+            })
+        .forEach(
+            txtFile ->
+                FileQuestionRepository.createQuestionsFromFile(
+                    "quiz/resources/" + txtFile.getName(),
+                    true,
+                    questionString ->
+                        QuestionParser.parseQuestion(questionString, myQuiz.getQuestions())));
+  }
+
+    private static String[] detectFilenamesInResourcesFolder() {
+        URL pathUrl = QuizDriver.class.getClassLoader().getResource("quiz/resources/");
+        String[] dir = new String[0];
+        if ((pathUrl != null) && pathUrl.getProtocol().equals("file")) {
+            try {
+                dir= new File(pathUrl.toURI()).list();
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
+        return dir;
     }
 
 }
